@@ -1,0 +1,23 @@
+.item-list{
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+
+.item-list .list-group-item{
+    cursor: pointer;
+    background-color: rgba(70, 74, 98, 0.81);
+    color: white;
+    border: unset;
+    border-radius: unset;
+}
+
+.item-list .list-group-item:not(:last-child){
+    border-bottom: 1px solid #999999bd;
+}
+
+.item-list .list-group-item:hover {
+    background-color: #999999bd;
+    color: white;
+}
+
