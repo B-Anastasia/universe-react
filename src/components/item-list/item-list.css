@@ -1,12 +1,13 @@
 .item-list{
     font-size: 1rem;
     border-radius: 5px;
+    background-color: rgba(70, 74, 98, 0.81);
 }
 
 
 .item-list .list-group-item{
     cursor: pointer;
-    background-color: rgba(70, 74, 98, 0.81);
+    background-color: rgba(0,0,0,0);
     color: white;
     border: unset;
     border-radius: unset;

@@ -50,3 +50,7 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.spinner__loading{
+    margin: 0 auto;
+}
