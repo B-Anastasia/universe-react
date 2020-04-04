@@ -1,5 +1,5 @@
-.app{
- background: url("/img/stars.jpg") no-repeat 50% 0;
+body{
+    background: url("/img/stars.jpg") no-repeat 50% 0;
     background-size: cover;
     min-height: 100vh;
 }

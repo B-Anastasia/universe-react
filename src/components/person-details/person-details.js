@@ -5,7 +5,6 @@ import Spinner from "../spinner";
 
 export default class PersonDetails extends Component {
     swapiService = new SwapiService();
-
     state = {
         person: null,
         loading: false
@@ -16,39 +15,37 @@ export default class PersonDetails extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.personId !== prevProps.personId){
+        if (this.props.personId !== prevProps.personId) {
             console.log('set');
             this.setState({
-                loading:true
+                loading: true
             });
             console.log("update");
             this.updatePerson();
         }
     }
 
-    updatePerson = () =>{
+    updatePerson = () => {
         const {personId} = this.props;
-        if(!personId){
+        if (!personId) {
             return;
         }
         this.swapiService
             .getPerson(personId)
-            .then((person)=>{
+            .then((person) => {
                 this.setState({
                     person,
                     loading: false
+                });
             });
-    });
     };
-
 
     render() {
         const {loading} = this.state;
-        const onLoaded = (loading || !this.state.person );
-        const spinner = onLoaded? <Spinner/> : <ItemDetail person={this.state.person} /> ;
+        const onLoaded = (loading || !this.state.person);
+        const spinner = onLoaded ? <Spinner/> : <ItemDetail person={this.state.person}/>;
 
-
-        return(
+        return (
             <div className="person-details card">
                 {spinner}
             </div>
@@ -56,11 +53,10 @@ export default class PersonDetails extends Component {
     }
 };
 
-const ItemDetail = ({person}) =>{
+const ItemDetail = ({person}) => {
+    const {id, name, gender, birthYear, eyeColor, height} = person;
 
-    const { id, name, gender, birthYear, eyeColor, height} = person;
-
-    return(
+    return (
         <div className='person-details--main d-flex'>
             <div className='person-details__image'>
                 <img src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} alt="person"/>

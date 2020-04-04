@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import './app.css';
 import Header from "../header";
 import RandomPlanet from "../random-planet";
-import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import ErrorIndicator from "../error-indicator";
+import PeoplePage from "../people-page";
+import ErrorButton from "../error-button";
 
 export default class App extends Component{
 
@@ -12,16 +13,11 @@ export default class App extends Component{
         planet:{
             showPlanet: true,
             showName: true
-        }
+        },
+        hasError: false
     };
 
-    onPersonSelected = (id) =>{
-        return (
-            this.setState({
-                selectedPersonId: id
-            })
-        )
-    };
+
 
     onTogglePlanet =()=>{
         console.log(this.state.planet);
@@ -34,38 +30,43 @@ export default class App extends Component{
         });
        };
 
+    componentDidCatch(error, errorInfo) {
+        console.log('componentDidCatch');
+        this.setState({
+            hasError: true
+        });
+    }
+
 
     render(){
-        const {showPlanet} = this.state.planet;
+        if(this.state.hasError){
+            return <ErrorIndicator/>
+        }
+
+        const {showPlanet, showName} = this.state.planet;
         const viewPlanet = showPlanet? <RandomPlanet /> : null;
 
         return (
             <div className='app'>
                 <Header/>
                 {viewPlanet}
-                <Button planet={this.state.planet} togglePlanet={this.onTogglePlanet} />
                 <div className='container'>
-                    <div className='row'>
-                        <div className='col-12 col-md-6 mb-3'>
-                            <ItemList onItemSelected={this.onPersonSelected}/>
-                        </div>
-                        <div className='col-12 col-md-6'>
-                            <PersonDetails personId={this.state.selectedPersonId} />
-                        </div>
-                    </div>
+                    <ButtonToggle showName={showName} togglePlanet={this.onTogglePlanet} />
+                    <ErrorButton/>
+                    <PeoplePage />
+                   <PeoplePage />
+                   <PeoplePage />
                 </div>
             </div>
         );
     }
 };
 
-const Button = ({showName, togglePlanet}) =>{
+const ButtonToggle = ({showName, togglePlanet}) =>{
     const name = showName? 'Hide Planet':'Show Planet';
     return (
-        <div className='container'>
             <div className='btn btn-light mb-4' onClick={togglePlanet}>
             {name}
-        </div>
         </div>
     );
 };
