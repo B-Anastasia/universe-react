@@ -1,46 +1,43 @@
-import React, {Component} from "react";
-import './item-list.css';
-import SwapiService from "../../services/swapi-service";
+import React, { Component } from "react";
+import "./item-list.css";
 import Spinner from "../spinner";
 
-export default class ItemList extends Component{
+export default class ItemList extends Component {
+  state = {
+    itemList: null,
+  };
 
-    swapiService = new SwapiService();
+  componentDidMount() {
+    const { getData } = this.props;
+    getData().then((itemList) => {
+      this.setState({
+        itemList,
+      });
+    });
+  }
 
-    state={
-        peopleList : null,
-    };
+  renderItems(arr) {
+    return arr.map((item) => {
+      const { id } = item;
+      const label = this.props.renderItem(item);
 
-    componentDidMount(){
-        this.swapiService
-            .getAllPeople()
-            .then ( (peopleList)=>{
-                this.setState({
-                    peopleList
-                });
-            });
-    }
+      return (
+        <li
+          className="list-group-item"
+          key={id}
+          onClick={() => {
+            this.props.onItemSelected(id);
+          }}
+        >
+          {label}
+        </li>
+      );
+    });
+  }
 
-    renderItems (arr){
-        return arr.map(({id, name})=>{
-            return (
-                <li
-                    className='list-group-item'
-                    key={id}
-                    onClick={()=>{this.props.onItemSelected(id)}}>
-                    {name}
-                </li>
-            );
-        })
-    }
-
-    render(){
-        const { peopleList} = this.state;
-        const hasData = peopleList? this.renderItems(peopleList): <Spinner />;
-        return(
-            <ul className="item-list list-group " >
-                {hasData}
-            </ul>
-        );
-    }
-};
+  render() {
+    const { itemList } = this.state;
+    const hasData = itemList ? this.renderItems(itemList) : <Spinner />;
+    return <ul className="item-list list-group">{hasData}</ul>;
+  }
+}
