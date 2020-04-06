@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./app.css";
 import Header from "../header";
-import RandomPlanet from "../random-planet";
-import ErrorIndicator from "../error-indicator";
-import PeoplePage from "../people-page";
-import ErrorButton from "../error-button";
+// import RandomPlanet from "../random-planet";
+// import ErrorIndicator from "../error-indicator";
+// import PeoplePage from "../people-page";
+// import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
 import Row from "../row";
@@ -44,9 +44,9 @@ export default class App extends Component {
     const person = (
       <ItemDetails itemId={11} getData={getPerson} getImgUrl={getImgUrlPerson}>
         <Record label="Gender" field="gender" />
-        <Record label="Birth Year" field="gender" />
-        <Record label="Eye Color" field="gender" />
-        <Record label="Height" field="gender" />
+        <Record label="Birth Year" field="birthYear" />
+        <Record label="Eye Color" field="eyeColor" />
+        <Record label="Height" field="height" />
       </ItemDetails>
     );
     const starship = (
@@ -54,7 +54,15 @@ export default class App extends Component {
         itemId={11}
         getData={getStarship}
         getImgUrl={getImgUrlStarship}
-      />
+      >
+        <Record field='model' label='Model' />
+        <Record field='starshipClass' label='Starship Class' />
+        <Record field='length' label='Length' />
+        <Record field='manufacturer' label='Manufacturer' />
+        <Record field='hyperdriveRating' label='Hyper Drive Rating' />
+        <Record field='crew' label='Crew' />
+        <Record field='passengers' label='Passengers' />
+      </ItemDetails>
     );
 
     return (
@@ -77,11 +85,11 @@ export default class App extends Component {
   }
 }
 
-const ButtonToggle = ({ showName, togglePlanet }) => {
-  const name = showName ? "Hide Planet" : "Show Planet";
-  return (
-    <div className="btn btn-light mb-4" onClick={togglePlanet}>
-      {name}
-    </div>
-  );
-};
+// const ButtonToggle = ({ showName, togglePlanet }) => {
+//   const name = showName ? "Hide Planet" : "Show Planet";
+//   return (
+//     <div className="btn btn-light mb-4" onClick={togglePlanet}>
+//       {name}
+//     </div>
+//   );
+// };
