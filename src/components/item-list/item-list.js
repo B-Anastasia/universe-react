@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./item-list.css";
 import Spinner from "../spinner";
+import ErrorBoundry from "../error-boundry";
 
 export default class ItemList extends Component {
   state = {
@@ -19,8 +20,9 @@ export default class ItemList extends Component {
   renderItems(arr) {
     return arr.map((item) => {
       const { id } = item;
-      const label = this.props.renderItem(item);
-
+      const child = this.props.children;
+      const label = child(item);
+      // const label = ({ children }) => children(item);
       return (
         <li
           className="list-group-item"
@@ -38,6 +40,10 @@ export default class ItemList extends Component {
   render() {
     const { itemList } = this.state;
     const hasData = itemList ? this.renderItems(itemList) : <Spinner />;
-    return <ul className="item-list list-group">{hasData}</ul>;
+    return (
+      <ErrorBoundry>
+        <ul className="item-list list-group">{hasData}</ul>
+      </ErrorBoundry>
+    );
   }
 }

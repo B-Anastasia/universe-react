@@ -5,8 +5,6 @@ import RandomPlanet from "../random-planet";
 import ErrorIndicator from "../error-indicator";
 import PeoplePage from "../people-page";
 import ErrorButton from "../error-button";
-import ItemList from "../item-list";
-import PersonDetails from "../person-details";
 import SwapiService from "../../services/swapi-service";
 
 export default class App extends Component {
@@ -19,10 +17,6 @@ export default class App extends Component {
     },
     hasError: false,
   };
-
-  // getData = () => {
-  //   return this.swapiService.getAllPeople();
-  // };
 
   onTogglePlanet = () => {
     console.log(this.state.planet);
@@ -61,30 +55,6 @@ export default class App extends Component {
           />
           <ErrorButton />
           <PeoplePage />
-          <div className="row">
-            <div className="col-12 col-md-6 mb-3">
-              <ItemList
-                onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getAllPlanets}
-                renderItem={(item) => item.name}
-              />
-            </div>
-            <div className="col-12 col-md-6">
-              <PersonDetails personId={this.state.selectedPersonId} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 col-md-6 mb-3">
-              <ItemList
-                onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getAllStarships}
-                renderItem={(item) => item.name}
-              />
-            </div>
-            <div className="col-12 col-md-6">
-              <PersonDetails personId={this.state.selectedPersonId} />
-            </div>
-          </div>
         </div>
       </div>
     );
