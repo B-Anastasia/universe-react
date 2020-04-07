@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import "./app.css";
 import Header from "../header";
-// import RandomPlanet from "../random-planet";
-// import ErrorIndicator from "../error-indicator";
+import RandomPlanet from "../random-planet";
 // import PeoplePage from "../people-page";
-// import ErrorButton from "../error-button";
+import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
-import Row from "../row";
+// import Row from "../row";
 import ItemDetails, { Record } from "../item-details/item-details";
+import ItemList from "../item-list";
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -34,12 +34,14 @@ export default class App extends Component {
   render() {
     const {
       getPerson,
+        getAllPeople,
       getStarship,
       getImgUrlPerson,
       getImgUrlStarship,
+      getAllPlanets,
     } = this.swapiService;
-    // const { showPlanet, showName } = this.state.planet;
-    // const viewPlanet = showPlanet ? <RandomPlanet /> : null;
+    const { showPlanet, showName } = this.state.planet;
+    const viewPlanet = showPlanet ? <RandomPlanet /> : null;
 
     const person = (
       <ItemDetails itemId={11} getData={getPerson} getImgUrl={getImgUrlPerson}>
@@ -65,19 +67,26 @@ export default class App extends Component {
       </ItemDetails>
     );
 
-    return (
+     return (
       <ErrorBoundry>
         <div className="app">
           <Header />
-          {/*{viewPlanet}*/}
+          {viewPlanet}
           <div className="container">
-            <Row left={person} right={starship} />
-            {/*<ButtonToggle*/}
-            {/*  showName={showName}*/}
-            {/*  togglePlanet={this.onTogglePlanet}*/}
-            {/*/>*/}
-            {/*<ErrorButton />*/}
+            <ButtonToggle
+              showName={showName}
+              togglePlanet={this.onTogglePlanet}
+            />
+            {/*<Row  right={person} left={itemList}/>*/}
+            <ErrorButton />
             {/*<PeoplePage />*/}
+            <ItemList getData = {getAllPeople} onItemSelected={()=>{}}>
+              {({name}) => <span>{name}</span>}
+            </ItemList>
+            <br/>
+            <ItemList getData = {getAllPlanets} onItemSelected={()=>{}}>
+              {({name}) => <span>{name}</span>}
+            </ItemList>
           </div>
         </div>
       </ErrorBoundry>
@@ -85,11 +94,11 @@ export default class App extends Component {
   }
 }
 
-// const ButtonToggle = ({ showName, togglePlanet }) => {
-//   const name = showName ? "Hide Planet" : "Show Planet";
-//   return (
-//     <div className="btn btn-light mb-4" onClick={togglePlanet}>
-//       {name}
-//     </div>
-//   );
-// };
+const ButtonToggle = ({ showName, togglePlanet }) => {
+  const name = showName ? "Hide Planet" : "Show Planet";
+  return (
+    <div className="btn btn-light mb-4" onClick={togglePlanet}>
+      {name}
+    </div>
+  );
+};

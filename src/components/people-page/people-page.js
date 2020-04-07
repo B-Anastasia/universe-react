@@ -39,6 +39,6 @@ export default class PeoplePage extends Component {
         <ItemDetails itemId={this.state.selectedPersonId} />
       </ErrorBoundry>
     );
-    return <Row left={itemList} right={itemDetails} />;
+    return <Row left={itemList} right={itemList} />;
   }
 }
