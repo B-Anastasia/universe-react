@@ -54,12 +54,16 @@ export default class App extends Component {
             {/*<Row  right={person} left={itemList}/>*/}
             <ErrorButton />
             {/*<PeoplePage />*/}
-            {/*<PersonList>{({ name }) => <span>{name}</span>}</PersonList>*/}
-            {/*<br />*/}
-            {/*<PlanetList>{({ name }) => <span>{name}</span>}</PlanetList>*/}
-            {/*<br />*/}
-            {/*<StarshipList>{({ name }) => <span>{name}</span>}</StarshipList>*/}
+
+            <PersonList />
+
+            <PlanetList />
+
+            <StarshipList />
+
             <PersonDetails itemId={11} />
+            <PlanetDetails itemId={11} />
+            <StarshipDetails itemId={11} />
           </div>
         </div>
       </ErrorBoundry>
