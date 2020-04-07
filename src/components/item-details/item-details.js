@@ -16,7 +16,6 @@ const Record = ({ item, label, field }) => {
 export { Record };
 
 export default class ItemDetails extends Component {
-  swapiService = new SwapiService();
   state = {
     item: null,
     image: null,
@@ -73,7 +72,7 @@ export default class ItemDetails extends Component {
             <h4>{name}</h4>
             <ul className="list-group">
               {React.Children.map(this.props.children, (child) => {
-                return React.cloneElement(child, {item});
+                return React.cloneElement(child, { item });
               })}
             </ul>
           </div>

@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import "./app.css";
 import Header from "../header";
 import RandomPlanet from "../random-planet";
-// import PeoplePage from "../people-page";
+import PeoplePage from "../people-page";
 import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
-// import Row from "../row";
-import ItemDetails, { Record } from "../item-details/item-details";
-import ItemList from "../item-list";
+import Row from "../row";
+import {
+  PersonList,
+  PlanetList,
+  StarshipList,
+  PlanetDetails,
+  PersonDetails,
+  StarshipDetails,
+} from "../sw-components";
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -32,42 +38,10 @@ export default class App extends Component {
   };
 
   render() {
-    const {
-      getPerson,
-        getAllPeople,
-      getStarship,
-      getImgUrlPerson,
-      getImgUrlStarship,
-      getAllPlanets,
-    } = this.swapiService;
     const { showPlanet, showName } = this.state.planet;
     const viewPlanet = showPlanet ? <RandomPlanet /> : null;
 
-    const person = (
-      <ItemDetails itemId={11} getData={getPerson} getImgUrl={getImgUrlPerson}>
-        <Record label="Gender" field="gender" />
-        <Record label="Birth Year" field="birthYear" />
-        <Record label="Eye Color" field="eyeColor" />
-        <Record label="Height" field="height" />
-      </ItemDetails>
-    );
-    const starship = (
-      <ItemDetails
-        itemId={11}
-        getData={getStarship}
-        getImgUrl={getImgUrlStarship}
-      >
-        <Record field='model' label='Model' />
-        <Record field='starshipClass' label='Starship Class' />
-        <Record field='length' label='Length' />
-        <Record field='manufacturer' label='Manufacturer' />
-        <Record field='hyperdriveRating' label='Hyper Drive Rating' />
-        <Record field='crew' label='Crew' />
-        <Record field='passengers' label='Passengers' />
-      </ItemDetails>
-    );
-
-     return (
+    return (
       <ErrorBoundry>
         <div className="app">
           <Header />
@@ -80,13 +54,12 @@ export default class App extends Component {
             {/*<Row  right={person} left={itemList}/>*/}
             <ErrorButton />
             {/*<PeoplePage />*/}
-            <ItemList getData = {getAllPeople} onItemSelected={()=>{}}>
-              {({name}) => <span>{name}</span>}
-            </ItemList>
-            <br/>
-            <ItemList getData = {getAllPlanets} onItemSelected={()=>{}}>
-              {({name}) => <span>{name}</span>}
-            </ItemList>
+            {/*<PersonList>{({ name }) => <span>{name}</span>}</PersonList>*/}
+            {/*<br />*/}
+            {/*<PlanetList>{({ name }) => <span>{name}</span>}</PlanetList>*/}
+            {/*<br />*/}
+            {/*<StarshipList>{({ name }) => <span>{name}</span>}</StarshipList>*/}
+            <PersonDetails itemId={11} />
           </div>
         </div>
       </ErrorBoundry>

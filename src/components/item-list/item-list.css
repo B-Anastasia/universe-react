@@ -1,26 +1,23 @@
-.item-list{
-    font-size: 1rem;
-    border-radius: 5px;
-    /*background-color: rgba(70, 74, 98, 0.81);*/
-    background-color: #23232dc4;
+.item-list {
+  font-size: 1rem;
+  border-radius: 5px;
+  /*background-color: rgba(70, 74, 98, 0.81);*/
+  background-color: #23232dc4;
 }
 
-
-
-.item-list .list-group-item{
-    cursor: pointer;
-    background-color: rgba(0,0,0,0);
-    color: white;
-    border: unset;
-    border-radius: unset;
+.item-list .list-group-item {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  border: unset;
+  border-radius: unset;
 }
 
-.item-list .list-group-item:not(:last-child){
-    border-bottom: 1px solid #999999bd;
+.item-list .list-group-item:not(:last-child) {
+  border-bottom: 1px solid #999999bd;
 }
 
 .item-list .list-group-item:hover {
-    background-color: #999999bd;
-    color: white;
+  background-color: #999999bd;
+  color: white;
 }
-

@@ -1,6 +1,6 @@
-body{
-    background: url("/img/3.jpg") no-repeat 50% 0;
-    background-size: cover;
-    min-height: 100vh;
-    color: white;
+body {
+  background: url("/img/3.jpg") no-repeat 50% 0;
+  background-size: cover;
+  min-height: 100vh;
+  color: white;
 }
