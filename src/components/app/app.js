@@ -6,6 +6,8 @@ import PeoplePage from "../people-page";
 import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
+import DummySwapiService from "../../services/dummy-swapi-service";
+import {  SwapiServiceProvider} from '../swapi-service-context';
 import Row from "../row";
 import {
   PersonList,
@@ -17,7 +19,7 @@ import {
 } from "../sw-components";
 
 export default class App extends Component {
-  swapiService = new SwapiService();
+  swapiService = new DummySwapiService();
 
   state = {
     planet: {
@@ -43,6 +45,7 @@ export default class App extends Component {
 
     return (
       <ErrorBoundry>
+        <SwapiServiceProvider value={this.swapiService}>
         <div className="app">
           <Header />
           {viewPlanet}
@@ -61,11 +64,12 @@ export default class App extends Component {
 
             <StarshipList />
 
-            <PersonDetails itemId={11} />
-            <PlanetDetails itemId={11} />
-            <StarshipDetails itemId={11} />
+            <PersonDetails itemId={1} />
+            <PlanetDetails itemId={1} />
+            <StarshipDetails itemId={1} />
           </div>
         </div>
+        </SwapiServiceProvider>
       </ErrorBoundry>
     );
   }
