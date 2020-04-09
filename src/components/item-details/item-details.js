@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./item-details.css";
 import Spinner from "../spinner";
 import ErrorButton from "../error-button";
-import SwapiService from "../../services/swapi-service";
+import ErrorIndicator from "../error-indicator";
 
 const Record = ({ item, label, field }) => {
   return (
@@ -19,7 +19,8 @@ export default class ItemDetails extends Component {
   state = {
     item: null,
     image: null,
-    loading: false,
+    loading: true,
+    error: false,
   };
 
   componentDidMount() {
@@ -27,13 +28,23 @@ export default class ItemDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.itemId !== prevProps.itemId) {
+    if (
+      this.props.itemId !== prevProps.itemId ||
+      this.props.getData !== prevProps.getData ||
+      this.props.getImgUrl !== prevProps.getImgUrl
+    ) {
       this.setState({
         loading: true,
       });
       this.updateItem();
     }
   }
+  onError = () => {
+    this.setState({
+      error: true,
+      loading: false,
+    });
+  };
 
   updateItem = () => {
     const { itemId, getData, getImgUrl } = this.props;
@@ -47,15 +58,19 @@ export default class ItemDetails extends Component {
         loading: false,
       });
     });
+    // .catch(this.onError);
   };
 
   render() {
+    const { loading, item, image, error } = this.state;
+    if (error) {
+      return <ErrorIndicator />;
+    }
     if (!this.state.item) {
       return (
         <span style={{ fontSize: "1.2rem" }}>Select an item from the list</span>
       );
     }
-    const { loading, item, image } = this.state;
     const onLoaded = loading || !this.state.item;
     if (onLoaded) {
       return <Spinner />;

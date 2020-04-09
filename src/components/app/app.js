@@ -7,8 +7,8 @@ import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
 import DummySwapiService from "../../services/dummy-swapi-service";
-import {  SwapiServiceProvider} from '../swapi-service-context';
-import Row from "../row";
+import { SwapiServiceProvider } from "../swapi-service-context";
+// import Row from "../row";
 import {
   PersonList,
   PlanetList,
@@ -19,23 +19,37 @@ import {
 } from "../sw-components";
 
 export default class App extends Component {
-  swapiService = new DummySwapiService();
-
   state = {
     planet: {
       showPlanet: true,
       showName: true,
     },
+
+    swapiService: new SwapiService(),
   };
 
   onTogglePlanet = () => {
     console.log(this.state.planet);
-    const { showPlanet, showName } = this.state.planet;
-    this.setState({
-      planet: {
-        showPlanet: !showPlanet,
-        showName: !showName,
-      },
+
+    this.setState(({ planet }) => {
+      const { showPlanet, showName } = planet;
+      return {
+        planet: {
+          showPlanet: !showPlanet,
+          showName: !showName,
+        },
+      };
+    });
+  };
+
+  onServiceChange = () => {
+    this.setState(({ swapiService }) => {
+      const Service =
+        swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+      console.log(Service);
+      return {
+        swapiService: new Service(),
+      };
     });
   };
 
@@ -45,30 +59,28 @@ export default class App extends Component {
 
     return (
       <ErrorBoundry>
-        <SwapiServiceProvider value={this.swapiService}>
-        <div className="app">
-          <Header />
-          {viewPlanet}
-          <div className="container">
-            <ButtonToggle
-              showName={showName}
-              togglePlanet={this.onTogglePlanet}
-            />
-            {/*<Row  right={person} left={itemList}/>*/}
-            <ErrorButton />
-            {/*<PeoplePage />*/}
+        <SwapiServiceProvider value={this.state.swapiService}>
+          <div className="app">
+            <Header onServiceChange={this.onServiceChange} />
+            {viewPlanet}
+            <div className="container">
+              <ButtonToggle
+                showName={showName}
+                togglePlanet={this.onTogglePlanet}
+              />
+              {/*/!*<Row  right={person} left={itemList}/>*!/*/}
+              <ErrorButton />
+              {/*<PeoplePage />*/}
 
-            <PersonList />
+              <PersonList />
+              {/*<PlanetList />*/}
+              {/*<StarshipList />*/}
 
-            <PlanetList />
-
-            <StarshipList />
-
-            <PersonDetails itemId={1} />
-            <PlanetDetails itemId={1} />
-            <StarshipDetails itemId={1} />
+              {/*<PersonDetails itemId={1} />*/}
+              {/*<PlanetDetails itemId={2} />*/}
+              <StarshipDetails itemId={1} />
+            </div>
           </div>
-        </div>
         </SwapiServiceProvider>
       </ErrorBoundry>
     );
