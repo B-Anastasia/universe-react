@@ -12,6 +12,9 @@ const withData = (View) => {
 
     componentDidUpdate(prevProps) {
       if (this.props.getData !== prevProps.getData) {
+        this.setState({
+          loading: true,
+        });
         this.update();
       }
     }
