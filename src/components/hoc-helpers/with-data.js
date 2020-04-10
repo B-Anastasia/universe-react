@@ -12,9 +12,6 @@ const withData = (View) => {
 
     componentDidUpdate(prevProps) {
       if (this.props.getData !== prevProps.getData) {
-        this.setState({
-          loading: true,
-        });
         this.update();
       }
     }
@@ -23,20 +20,22 @@ const withData = (View) => {
       this.update();
     }
 
-    onError = () => {
-      this.setState({
-        error: true,
-        loading: false,
-      });
-    };
     update = () => {
-      this.props.getData().then((data) => {
-        this.setState({
-          data,
-          loading: false,
+      this.setState({ loading: true, error: false });
+      this.props
+        .getData()
+        .then((data) => {
+          this.setState({
+            data,
+            loading: false,
+          });
+        })
+        .catch(() => {
+          this.setState({
+            error: true,
+            loading: false,
+          });
         });
-      });
-      // .catch(this.onError);
     };
 
     render() {
@@ -47,9 +46,7 @@ const withData = (View) => {
       if (loading) {
         return <Spinner />;
       }
-      // if (!(loading || error)) {
       return <View {...this.props} data={data} />;
-      // }
     }
   };
 };

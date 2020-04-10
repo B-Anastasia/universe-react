@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import "./app.css";
 import Header from "../header";
 import RandomPlanet from "../random-planet";
-import PeoplePage from "../people-page";
 import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
 import DummySwapiService from "../../services/dummy-swapi-service";
 import { SwapiServiceProvider } from "../swapi-service-context";
-// import Row from "../row";
 import {
   PersonList,
   PlanetList,
@@ -17,6 +15,7 @@ import {
   PersonDetails,
   StarshipDetails,
 } from "../sw-components";
+import Row from "../row";
 
 export default class App extends Component {
   state = {
@@ -29,8 +28,6 @@ export default class App extends Component {
   };
 
   onTogglePlanet = () => {
-    console.log(this.state.planet);
-
     this.setState(({ planet }) => {
       const { showPlanet, showName } = planet;
       return {
@@ -68,17 +65,14 @@ export default class App extends Component {
                 showName={showName}
                 togglePlanet={this.onTogglePlanet}
               />
-              {/*/!*<Row  right={person} left={itemList}/>*!/*/}
               <ErrorButton />
-              {/*<PeoplePage />*/}
 
-              <PersonList />
-              {/*<PlanetList />*/}
-              {/*<StarshipList />*/}
-
-              {/*<PersonDetails itemId={1} />*/}
-              {/*<PlanetDetails itemId={2} />*/}
-              <StarshipDetails itemId={1} />
+              <Row right={<PersonDetails itemId={1} />} left={<PersonList />} />
+              <Row right={<PlanetDetails itemId={2} />} left={<PlanetList />} />
+              <Row
+                right={<StarshipDetails itemId={1} />}
+                left={<StarshipList />}
+              />
             </div>
           </div>
         </SwapiServiceProvider>
