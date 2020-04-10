@@ -6,16 +6,8 @@ import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
 import DummySwapiService from "../../services/dummy-swapi-service";
+import { PeoplePage, StarshipsPage, PlanetsPage } from "../pages";
 import { SwapiServiceProvider } from "../swapi-service-context";
-import {
-  PersonList,
-  PlanetList,
-  StarshipList,
-  PlanetDetails,
-  PersonDetails,
-  StarshipDetails,
-} from "../sw-components";
-import Row from "../row";
 
 export default class App extends Component {
   state = {
@@ -23,7 +15,6 @@ export default class App extends Component {
       showPlanet: true,
       showName: true,
     },
-
     swapiService: new SwapiService(),
   };
 
@@ -43,7 +34,6 @@ export default class App extends Component {
     this.setState(({ swapiService }) => {
       const Service =
         swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
-      console.log(Service);
       return {
         swapiService: new Service(),
       };
@@ -67,12 +57,9 @@ export default class App extends Component {
               />
               <ErrorButton />
 
-              <Row right={<PersonDetails itemId={1} />} left={<PersonList />} />
-              <Row right={<PlanetDetails itemId={2} />} left={<PlanetList />} />
-              <Row
-                right={<StarshipDetails itemId={1} />}
-                left={<StarshipList />}
-              />
+              <PeoplePage />
+              <PlanetsPage />
+              <StarshipsPage />
             </div>
           </div>
         </SwapiServiceProvider>
