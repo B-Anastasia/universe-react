@@ -8,6 +8,17 @@ export default class RandomPlanet extends Component {
   static defaultProps = {
     updateInterval: 10000,
   };
+
+  static propTypes = {
+    updateInterval: (props, propName, componentName) => {
+      const value = props[propName];
+      if (typeof value === "number" && !isNaN(value)) {
+        return null;
+      }
+      return new TypeError(`${componentName}:${propName} must be a number`);
+    },
+  };
+
   swapiService = new SwapiService();
 
   state = {
@@ -17,7 +28,7 @@ export default class RandomPlanet extends Component {
   };
 
   componentDidMount() {
-    const { updateInterval } = this.props;
+    // const { updateInterval } = this.props;
     this.updatePlanet();
     // this.interval = setInterval(this.updatePlanet, updateInterval);
   }
