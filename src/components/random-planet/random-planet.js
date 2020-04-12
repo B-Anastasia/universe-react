@@ -4,8 +4,9 @@ import SwapiService from "../../services/swapi-service";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
 import PropTypes from "prop-types";
+// import withSwapiService from "../hoc-helpers/with-swapi-service";
 
-export default class RandomPlanet extends Component {
+class RandomPlanet extends Component {
   static defaultProps = {
     updateInterval: 10000,
   };
@@ -28,6 +29,12 @@ export default class RandomPlanet extends Component {
     // this.interval = setInterval(this.updatePlanet, updateInterval);
   }
 
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.getData !== this.props.getData) {
+  //     this.updatePlanet();
+  //   }
+  // }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
@@ -48,6 +55,7 @@ export default class RandomPlanet extends Component {
 
   updatePlanet = () => {
     const id = Math.floor(Math.random() * 15) + 3;
+    // const id = 2;
     this.swapiService
       .getPlanet(id)
       .then(this.onPlanetLoaded)
@@ -73,6 +81,15 @@ export default class RandomPlanet extends Component {
     );
   }
 }
+//
+// const mapMethodsToProps = (swapiService) => {
+//   // const id = 2;
+//   return {
+//     getData: swapiService.getPlanet,
+//   };
+// };
+
+export default RandomPlanet;
 
 const PlanetView = ({ planet }) => {
   const { population, rotationPeriod, diameter, name, id } = planet;

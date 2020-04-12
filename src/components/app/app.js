@@ -6,8 +6,11 @@ import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
 import DummySwapiService from "../../services/dummy-swapi-service";
+
 import { PeoplePage, StarshipsPage, PlanetsPage } from "../pages";
 import { SwapiServiceProvider } from "../swapi-service-context";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import StarshipDetails from "../sw-components/starship-details";
 
 export default class App extends Component {
   state = {
@@ -15,7 +18,7 @@ export default class App extends Component {
       showPlanet: true,
       showName: true,
     },
-    swapiService: new SwapiService(),
+    swapiService: new DummySwapiService(),
   };
 
   onTogglePlanet = () => {
@@ -47,21 +50,35 @@ export default class App extends Component {
     return (
       <ErrorBoundry>
         <SwapiServiceProvider value={this.state.swapiService}>
-          <div className="app">
-            <Header onServiceChange={this.onServiceChange} />
-            {viewPlanet}
-            <div className="container">
-              <ButtonToggle
-                showName={showName}
-                togglePlanet={this.onTogglePlanet}
-              />
-              <ErrorButton />
-
-              <PeoplePage />
-              <PlanetsPage />
-              <StarshipsPage />
+          <Router>
+            <div className="app">
+              <Header onServiceChange={this.onServiceChange} />
+              {viewPlanet}
+              <div className="container">
+                <ButtonToggle
+                  showName={showName}
+                  togglePlanet={this.onTogglePlanet}
+                />
+                <ErrorButton />
+                <Route
+                  path="/"
+                  render={() => <h2>Welcome to Star DB</h2>}
+                  exact
+                />
+                <Route path="/people" component={PeoplePage} />
+                <Route path="/planets" component={PlanetsPage} />
+                <Route path="/starships" exact component={StarshipsPage} />
+                <Route
+                  path="/starships/:id"
+                  render={({ match }) => {
+                    console.log({ match });
+                    const { id } = match.params;
+                    return <StarshipDetails itemId={id} />;
+                  }}
+                />
+              </div>
             </div>
-          </div>
+          </Router>
         </SwapiServiceProvider>
       </ErrorBoundry>
     );

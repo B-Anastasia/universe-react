@@ -1,30 +1,31 @@
 import React from "react";
 import "./header.css";
+import { Link } from "react-router-dom";
 
 const Header = ({ onServiceChange }) => {
   return (
     <div className="header navbar">
       <div className="container" id="header__nav">
         <h2>
-          <a href="/#" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             StarDB
-          </a>
+          </Link>
         </h2>
         <ul className="d-flex">
           <li className="nav-item">
-            <a href="/#" className="nav-link">
+            <Link to="/people" className="nav-link">
               People
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="/#" className="nav-link">
+            <Link to="/planets" className="nav-link">
               Planets
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="/#" className="nav-link">
+            <Link to="/starships" className="nav-link">
               Starships
-            </a>
+            </Link>
           </li>
         </ul>
         <div className="btn btn-light mb-4" onClick={onServiceChange}>
